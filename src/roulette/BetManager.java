@@ -2,19 +2,23 @@ package roulette;
 
 public class BetManager {
 	
-	private Bet[] possibleBets;
+	private String[] possibleBets = {"OddEven", "RedBlack", "ThreeConsecutive"};
 	
-	public BetManager(Bet[] possibleBets) {
-		this.possibleBets = possibleBets;
-	}
-	
-	public void printMenu() {
+	public void printMenu() throws InstantiationException, IllegalAccessException {
+		Object c = new Object();
 		System.out.println("You can make one of the following types of bets:");
         for (int k = 0; k < possibleBets.length; k++) {
-            System.out.println(String.format("%d) %s", (k + 1), possibleBets[k]));
+        	try {
+        		c = Class.forName(possibleBets[k]).newInstance();
+        	}
+        	catch (ClassNotFoundException e) {
+        		System.out.println("Class not found");
+        	}
+            System.out.println(String.format("%d) %s", (k + 1), c));
         }
 	}
+
 	
 	
-		
+	
 }

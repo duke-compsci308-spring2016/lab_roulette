@@ -68,7 +68,7 @@ public class Game {
      * Prompt the user to make a bet from a menu of choices.
      */
     private Bet promptForBet () {
-        BetManager manager = new BetManager(myPossibleBets);
+        BetManager manager = new BetManager();
         manager.printMenu();
         int response = ConsoleReader.promptRange("Please make a choice", 1, myPossibleBets.length);
         return myPossibleBets[response - 1];
