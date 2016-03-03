@@ -9,10 +9,22 @@ public class BetFactory {
 		
 	}
 	public Bet makeBetClass(String name){
-		for (Bet b: betClassList){
-			if (b.getClass().getName()==name){
-				return b;
-			}
+		Class c = null;
+		try {
+			c = Class.forName(name);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			return (Bet) c.newInstance();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return null;
 	}
