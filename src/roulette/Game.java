@@ -1,5 +1,9 @@
 package roulette;
 
+import java.util.Enumeration;
+import java.util.List;
+import java.util.ResourceBundle;
+
 import roulette.bets.OddEven;
 import roulette.bets.RedBlack;
 import roulette.bets.ThreeConsecutive;
@@ -14,12 +18,12 @@ import util.ConsoleReader;
 public class Game {
     // name of the game
     private static final String DEFAULT_NAME = "Roulette";
+    
+    public static final String BET_RESOURCES = "bet.properties";
+    private ResourceBundle myResources;
+    
     // add new bet subclasses here
-    private Bet[] myPossibleBets = {
-        new RedBlack("Red or Black", 1),
-        new OddEven("Odd or Even", 1),
-        new ThreeConsecutive("Three in a Row", 11),
-    };
+    private BetFactory betMaker;
     private Wheel myWheel;
 
     /**
@@ -27,6 +31,8 @@ public class Game {
      */
     public Game () {
         myWheel = new Wheel();
+        myResources = ResourceBundle.getBundle(BET_RESOURCES);
+        betMaker = new BetFactory(myResources);
     }
 
     /**
@@ -47,7 +53,8 @@ public class Game {
     public void play (Gambler player) {
         int amount = ConsoleReader.promptRange("How much do you want to bet",
                                                0, player.getBankroll());
-        Bet b = promptForBet();
+        try {
+        Bet b = promptForBet();       
         b.place();
 
         System.out.print("Spinning ...");
@@ -62,17 +69,24 @@ public class Game {
             amount *= -1;
         }
         player.updateBankroll(amount);
+        }
+        catch (Exception e) {
+        	System.out.println("Please enter a valid bet");
+        }
     }
 
     /**
      * Prompt the user to make a bet from a menu of choices.
      */
-    private Bet promptForBet () {
+    private Bet promptForBet () throws Exception{
+    	Enumeration<String> bets = myResources.getKeys();
         System.out.println("You can make one of the following types of bets:");
-        for (int k = 0; k < myPossibleBets.length; k++) {
-            System.out.println(String.format("%d) %s", (k + 1), myPossibleBets[k]));
+        int k = 1;
+        while (bets.hasMoreElements()) {
+            System.out.println(String.format("%d) %s", (k), bets.nextElement()));
+        	k++;
         }
-        int response = ConsoleReader.promptRange("Please make a choice", 1, myPossibleBets.length);
-        return myPossibleBets[response - 1];
+        String response = ConsoleReader.promptString("Please enter the bet name");
+        return betMaker.makeBet(response);
     }
 }
