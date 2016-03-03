@@ -5,18 +5,26 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 public class Factory {
+    private static final String PATH = "roulette.bets";
     private Map<Integer, Parameters> betTypes;
+    private ResourceBundle myBundle;
     
     public Factory () {
-//       betTypes = Arrays.asList(new RedBlack("Red or Black", 1),
-//                            new OddEven("Odd or Even", 1),
-//                            new ThreeConsecutive("Three in a Row", 11));
+        myBundle = ResourceBundle.getBundle(PATH);
         betTypes = new HashMap<>();
-        betTypes.put(0, new Parameters("roulette.RedBlack", "Red or Black", 1));
-        betTypes.put(1, new Parameters("roulette.OddEven", "Odd or Even", 1));
-        betTypes.put(2, new Parameters("roulette.ThreeConsecutive", "Three in a Row", 11));
+        
+        int counter = 0;
+        for(String key: myBundle.keySet()) {
+           String className = "roulette." + key;
+           String DescriptionAndInt = myBundle.getString(key);
+           String [] arguments = DescriptionAndInt.split(",");
+           betTypes.put(counter, new Parameters(className, arguments[0], Integer.parseInt(arguments[1])));
+           counter++;
+        }
+      
     }
     
     public Bet getBet (int index){
