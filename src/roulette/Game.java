@@ -4,7 +4,7 @@ import roulette.bets.OddEven;
 import roulette.bets.RedBlack;
 import roulette.bets.ThreeConsecutive;
 import util.ConsoleReader;
-
+import roulette.Factory;
 
 /**
  * Plays a game of roulette.
@@ -14,6 +14,8 @@ import util.ConsoleReader;
 public class Game {
     // name of the game
     private static final String DEFAULT_NAME = "Roulette";
+    private Factory betFactory;
+    
     // add new bet subclasses here
     private Bet[] myPossibleBets = {
         new RedBlack("Red or Black", 1),
@@ -27,6 +29,7 @@ public class Game {
      */
     public Game () {
         myWheel = new Wheel();
+        betFactory = new Factory();
     }
 
     /**
