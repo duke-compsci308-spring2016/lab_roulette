@@ -11,7 +11,7 @@ import roulette.Factory;
 public class Game {
     // name of the game
     private static final String DEFAULT_NAME = "Roulette";
-    private Factory betFactory;
+    private Factory betFactory = new Factory();
     
     // add new bet subclasses here
     private Bet[] myPossibleBets = {
@@ -26,7 +26,6 @@ public class Game {
      */
     public Game () {
         myWheel = new Wheel();
-        betFactory = new Factory();
     }
 
     /**
@@ -69,10 +68,27 @@ public class Game {
      */
     private Bet promptForBet () {
         System.out.println("You can make one of the following types of bets:");
-        for (int k = 0; k < myPossibleBets.length; k++) {
-            System.out.println(String.format("%d) %s", (k + 1), myPossibleBets[k].getDescription()));
+        for (int k = 0; k < 3; k++) {
+            try {
+				System.out.println(String.format("%d) %s", (k + 1), betFactory.createBet(k)));
+			} catch (NoSuchMethodException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         }
-        int response = ConsoleReader.promptRange("Please make a choice", 1, myPossibleBets.length);
-        return myPossibleBets[response - 1];
+        int response = ConsoleReader.promptRange("Please make a choice", 1, 3);
+        try {
+			return betFactory.createBet(response);
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
     }
 }

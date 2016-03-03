@@ -1,25 +1,27 @@
 package roulette;
 
-import java.util.ArrayList;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.List;
 
+import roulette.OddEven;
+import roulette.RedBlack;
+import roulette.ThreeConsecutive;
+
 public class Factory {
-	List<Class> betSubs;
+	String[] bets = {"RedBlack", "OddEven", "RedBlack"};
 	
-	public Factory(){
-		betSubs = new ArrayList<Class>();
-		betSubs.add(OddEven.class);
-		betSubs.add(RedBlack.class);
-		betSubs.add(ThreeConsecutive.class);
-	}
-	
-	public void printName(){
-		for(int i=0; i<betSubs.size(); i++){
-			System.out.println(betSubs.get(i).getName());
+	public Bet createBet(int input) throws NoSuchMethodException, SecurityException {
+		Bet bet;
+		Class betClass;
+		try {
+			betClass = Class.forName(bets[input]);
+			Constructor betConstructor = betClass.getConstructor(String.class, Integer.class);
+			bet = (Bet) betConstructor.newInstance(bets[input], input);
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			return null;
 		}
-	}
-	
-	public Class getClass(int index){
-		return betSubs.get(index);
+		return bet;
 	}
 }
