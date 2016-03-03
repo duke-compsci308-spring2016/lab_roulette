@@ -1,7 +1,6 @@
-package roulette.bets;
+package roulette;
 
 import roulette.Bet;
-import roulette.Wheel;
 import util.ConsoleReader;
 
 
