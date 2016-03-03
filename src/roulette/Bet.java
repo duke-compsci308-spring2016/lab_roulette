@@ -8,15 +8,15 @@ package roulette;
  */
 public class Bet {
     private String myDescription;
-    private int myOdds;
+    private double myOdds;
 
     /**
      * Constructs a bet with the given name and odds.
      * 
-     * @param description name of this kind of bet
+     * @param  name of this kind of bet
      * @param odds odds given by the house for this kind of bet
      */
-    public Bet (String description, int odds) {
+    public Bet (double odds, String description) {
         myDescription = description;
         myOdds = odds;
     }
@@ -24,7 +24,7 @@ public class Bet {
     /**
      * @return odds given by the house for this kind of bet
      */
-    public int getOdds () {
+    public double getOdds () {
         return myOdds;
     }
 

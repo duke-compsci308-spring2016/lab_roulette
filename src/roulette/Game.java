@@ -13,9 +13,9 @@ public class Game {
     private static final String DEFAULT_NAME = "Roulette";
     // bets player can make
     private Bet[] myPossibleBets = { 
-        new Bet("Red or Black", 1),
-        new Bet("Odd or Even", 1),
-        new Bet("Three in a Row", 11)
+        new Bet(1, "Red or Black"),
+        new Bet(1, "Odd or Even"),
+        new Bet(11, "Three in a Row")
     };
     private Wheel myWheel;
 
