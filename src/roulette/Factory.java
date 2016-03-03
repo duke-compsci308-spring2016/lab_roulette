@@ -15,10 +15,33 @@ public class Factory {
 	public Factory() {
 		// TODO Auto-generated constructor stub
 		myBets = new ArrayList<Bet>();
+		
 		myBets.add( new OddEven("Odd or Even", 1));
 		myBets.add( new RedBlack("Red or Black", 1));
 		myBets.add( new ThreeConsecutive("Three in a Row", 11));
 	}
+	
+	public static Bet createBet(String type) {
+			
+			Class c;
+			Bet bet;
+			try {
+				c = Class.forName("roulette."+ type );
+				bet = (Bet)c.newInstance();
+				return bet;
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch(IllegalAccessException e){
+				e.printStackTrace();
+			} catch (InstantiationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return null;
+	}
+	
 	
 	public List<Bet> getBets(){
 		return myBets;
