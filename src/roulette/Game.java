@@ -60,6 +60,7 @@ public class Game {
     }
 
     private Bet promptForBet () {
+        myFactory.printOptions();
         int response = ConsoleReader.promptRange("Please make a choice", 1, myFactory.getNumberOfBets());
         return myFactory.getBetInstance(response);
     }
