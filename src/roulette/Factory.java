@@ -6,8 +6,9 @@ import java.util.*;
 
 public class Factory {
 	Class[] bets = { OddEven.class, ThreeConsecutive.class, RedBlack.class };
-	String[] betName = { "Red or Black", "Odd or Even", "Three in a Row" };
+	String[] betName = { "REDBLACK", "ODDEVEN", "THREECONSECUTIVE" };
 	int[] betNumber = {1, 1, 11};
+	private ResourceBundle myResources = ResourceBundle.getBundle("bets");
 
 	public Bet makeBet(int i) {
 		Bet b = null;
@@ -19,7 +20,9 @@ public class Factory {
 			e1.printStackTrace();
 		}
 		try {
-			b = (Bet) cons.newInstance(betName[i], betNumber[i]);
+			String line = myResources.getString(betName[i]);
+			String[] properties = line.split(",");
+			b = (Bet) cons.newInstance(properties[1], Integer.parseInt(properties[0]));
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
 				| InvocationTargetException e) {
 			// TODO Auto-generated catch block
