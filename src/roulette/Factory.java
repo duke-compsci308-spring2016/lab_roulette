@@ -2,6 +2,7 @@ package roulette;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ResourceBundle;
 
 import roulette.bets.*;
 import util.ConsoleReader;
@@ -13,18 +14,7 @@ public class Factory {
 			"OddEven",
 			"ThreeConsecutive",
 	};
-	private String[] descriptions = {
-			"Red or Black",
-			"Odd or Even",
-			"Three in a Row",
-
-	};
-	private int[] odds = {
-			1,
-			1,
-			11,
-
-	};
+	
 	public Bet promptForBet() throws NoSuchMethodException, SecurityException, ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		System.out.println("You can make one of the following types of bets:");
 		for (int k = 0; k < myPossibleBets.length; k++) {
@@ -34,6 +24,8 @@ public class Factory {
 		String className = PREFIX + myPossibleBets[response-1];
 		Class[] params = new Class[]{String.class, Integer.class};
 		Constructor betCon = Class.forName(className).getConstructor(params);
-		return (Bet) betCon.newInstance(new Object[]{new String(descriptions[response-1]), new Integer(odds[response-1])});
+		String description = ResourceBundle.getBundle("bets").getString(myPossibleBets[response-1]).split(",")[0];
+		int odds = Integer.parseInt(ResourceBundle.getBundle("bets").getString(myPossibleBets[response-1]).split(",")[1]);
+		return (Bet) betCon.newInstance(new Object[]{new String(description), new Integer(odds)});
 	}
 }
