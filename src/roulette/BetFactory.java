@@ -2,6 +2,7 @@ package roulette;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ResourceBundle;
 
 import roulette.bets.OddEven;
 import roulette.bets.RedBlack;
@@ -19,6 +20,8 @@ public class BetFactory {
 	private String OddEven = "roulette.OddEven";
 	private String ThreeConsecutive = "roulette.ThreeConsecutive";
 	
+	private ResourceBundle propertiesBundle = ResourceBundle.getBundle("util/factory");
+	
 	public BetFactory() {
 		
 	}
@@ -32,23 +35,10 @@ public class BetFactory {
         
         int response = ConsoleReader.promptRange("Please make a choice", 1, myPossibleBets.length);
         
-        switch(response) {
-        case 1:
-        	Class redblack = Class.forName(RedBlack);
-        	Constructor c = redblack.getConstructor(Integer.class, String.class);
-        	return (Bet) c.newInstance("Red or Black", 1);
-        case 2:
-        	Class oddEven = Class.forName(OddEven);
-        	Constructor b = oddEven.getConstructor(Integer.class, String.class);
-        	return (Bet) b.newInstance("Odd or Even", 1);
-        case 3:
-        	Class threeConsecutives = Class.forName(ThreeConsecutive);
-        	Constructor a = threeConsecutives.getConstructor(Integer.class, String.class);
-        	return (Bet) a.newInstance("ThreeConsecutive", 11);
+        Class bet = Class.forName(propertiesBundle.getString(myPossibleBets[response]));
+        Constructor c = bet.getConstructor(Integer.class, String.class);
+        return (Bet) c.newInstance(myPossibleBets[response], 1);
         
-        }
-        
-        return null;
         
 	}
 }
