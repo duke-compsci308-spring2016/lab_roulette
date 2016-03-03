@@ -8,7 +8,7 @@ import util.ConsoleReader;
 public class OddEven extends Bet {
     private String myChoice;
 
-    public OddEven (String description, int odds) {
+    public OddEven (String description, Integer odds) {
         super(description, odds);
         myChoice = "";
     }
