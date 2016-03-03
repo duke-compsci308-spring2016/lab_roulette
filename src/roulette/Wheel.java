@@ -74,6 +74,20 @@ public class Wheel {
     }
 
     /**
+     * @return color of the current spot on the wheel
+     */
+    public String getColor () {
+        return OUR_SPOTS[myValue];
+    }
+
+    /**
+     * @return number of the current spot on the wheel
+     */
+    public int getNumber () {
+        return myValue;
+    }
+
+    /**
      * @return number of times the wheel has been spun
      */
     public int getNumSpins () {
@@ -83,46 +97,8 @@ public class Wheel {
     /**
      * Spins the wheel, choosing a new spot.
      */
-    public SpinResult spin () {
+    public void spin () {
         myNumSpins++;
         myValue = myRoller.nextInt(OUR_SPOTS.length);
-        // sometimes it is still useful to have "internal" get/set methods
-        return new SpinResult(getColor(), getNumber());
-    }
-
-    // @return color of the current spot on the wheel
-    private String getColor () {
-        return OUR_SPOTS[myValue];
-    }
-
-    // @return number of the current spot on the wheel
-    private int getNumber () {
-        return myValue;
-    }
-
-
-    // immutable "data" class that represents result of a single spin of the wheel
-    public class SpinResult {
-        private String myColor;
-        private int myNumber;
-
-        public SpinResult (String color, int number) {
-            myColor = color;
-            myNumber = number;
-        }
-
-        public String getColor () {
-            return myColor;
-        }
-
-        public int getNumber () {
-            return myNumber;
-        }
-
-        // return string representation of this wheel
-        @Override
-        public String toString () {
-            return getColor() + " " + getNumber();
-        }
     }
 }
