@@ -1,6 +1,6 @@
 package roulette;
 
-
+import roulette.bets.*;
 import util.ConsoleReader;
 
 public class Factory {
