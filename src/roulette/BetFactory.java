@@ -4,27 +4,25 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import roulette.bets.OddEven;
 import roulette.bets.RedBlack;
 import roulette.bets.ThreeConsecutive;
 
 public class BetFactory {
-	private Map<String,Integer> keys;
-	//private Bet[] myPossibleBets = { new RedBlack("Red or Black", 1), new OddEven("Odd or Even", 1),
-			//new ThreeConsecutive("Three in a Row", 11), };
-	public BetFactory(){
-		keys.put("Red or Black",1);
-		keys.put("Odd or Even",1);
-		keys.put("Three in a Row",11);
-
-	}
+	private ResourceBundle myBundle;
 	public Bet getBet(String betType) {
 		Constructor<Bet> myConstructor = null;
 		Bet myInstance = null;
+		
+		myBundle = ResourceBundle.getBundle("roulette/BetTypes.properties");
+		String myClassName = myBundle.getString(betType).split(",")[0];
+		int myClassInt = Integer.parseInt(myBundle.getString(betType).split(",")[1]);
+
 		try {
 			try {
-				myConstructor = (Constructor<Bet>) Class.forName("roulette.bets"+betType).getConstructor(String.class,Integer.class);
+				myConstructor = (Constructor<Bet>) Class.forName("roulette.bets"+myClassName).getConstructor(String.class,Integer.class);
 			} catch (NoSuchMethodException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -34,7 +32,7 @@ public class BetFactory {
 			}
 			myConstructor.setAccessible(true);
 			try {
-				myInstance = myConstructor.newInstance(betType, keys.get(betType));
+				myInstance = myConstructor.newInstance(betType,myClassInt);
 			} catch (IllegalArgumentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
