@@ -1,6 +1,5 @@
 package roulette;
 
-
 /**
  * Represents player's attempt to bet on outcome of the roulette wheel's spin.
  * 
