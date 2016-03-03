@@ -68,10 +68,8 @@ public class Game {
      * Prompt the user to make a bet from a menu of choices.
      */
     private Bet promptForBet () {
-        System.out.println("You can make one of the following types of bets:");
-        for (int k = 0; k < myPossibleBets.length; k++) {
-            System.out.println(String.format("%d) %s", (k + 1), myPossibleBets[k]));
-        }
+        BetManager manager = new BetManager(myPossibleBets);
+        manager.printMenu();
         int response = ConsoleReader.promptRange("Please make a choice", 1, myPossibleBets.length);
         return myPossibleBets[response - 1];
     }
