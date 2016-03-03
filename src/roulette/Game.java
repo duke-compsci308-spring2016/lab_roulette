@@ -21,12 +21,13 @@ public class Game {
         new ThreeConsecutive("Three in a Row", 11),
     };
     private Wheel myWheel;
-
+    private BetFactory betFactory;
     /**
      * Construct the game.
      */
     public Game () {
         myWheel = new Wheel();
+        betFactory = new BetFactory();
     }
 
     /**
@@ -47,7 +48,7 @@ public class Game {
     public void play (Gambler player) {
         int amount = ConsoleReader.promptRange("How much do you want to bet",
                                                0, player.getBankroll());
-        Bet b = promptForBet();
+        Bet b = betFactory.promptForBet();
         b.place();
 
         System.out.print("Spinning ...");
@@ -64,15 +65,4 @@ public class Game {
         player.updateBankroll(amount);
     }
 
-    /**
-     * Prompt the user to make a bet from a menu of choices.
-     */
-    private Bet promptForBet () {
-        System.out.println("You can make one of the following types of bets:");
-        for (int k = 0; k < myPossibleBets.length; k++) {
-            System.out.println(String.format("%d) %s", (k + 1), myPossibleBets[k]));
-        }
-        int response = ConsoleReader.promptRange("Please make a choice", 1, myPossibleBets.length);
-        return myPossibleBets[response - 1];
-    }
 }
