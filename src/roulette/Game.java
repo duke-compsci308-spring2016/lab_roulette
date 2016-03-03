@@ -1,8 +1,5 @@
 package roulette;
 
-import roulette.bets.OddEven;
-import roulette.bets.RedBlack;
-import roulette.bets.ThreeConsecutive;
 import util.ConsoleReader;
 
 
@@ -14,12 +11,13 @@ import util.ConsoleReader;
 public class Game {
     // name of the game
     private static final String DEFAULT_NAME = "Roulette";
+    private Factory factory;
     // add new bet subclasses here
-    private Bet[] myPossibleBets = {
-        new RedBlack("Red or Black", 1),
-        new OddEven("Odd or Even", 1),
-        new ThreeConsecutive("Three in a Row", 11),
-    };
+//    private Bet[] myPossibleBets = {
+//        new RedBlack("Red or Black", 1),
+//        new OddEven("Odd or Even", 1),
+//        new ThreeConsecutive("Three in a Row", 11),
+//    };
     private Wheel myWheel;
 
     /**
@@ -27,6 +25,7 @@ public class Game {
      */
     public Game () {
         myWheel = new Wheel();
+        factory = new Factory();
     }
 
     /**
@@ -43,19 +42,25 @@ public class Game {
      * that the bet is won or lost.
      *
      * @param player one that wants to play a round of the game
+     * @throws IllegalAccessException 
+     * @throws InstantiationException 
+     * @throws ClassNotFoundException 
      */
-    public void play (Gambler player) {
+    public void play (Gambler player) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         int amount = ConsoleReader.promptRange("How much do you want to bet",
                                                0, player.getBankroll());
-        Bet b = promptForBet();
-        b.place();
+        
+        String response = ConsoleReader.promptString("Please pick your bet");
+        
+        Bet b = getNewBet(response);
+        String betChoice = b.place();
 
         System.out.print("Spinning ...");
-        Wheel.SpinResult spinResult = myWheel.spin();
-        System.out.println(String.format("Dropped into %s", spinResult));
-        if (b.isMade(spinResult)) {
+        myWheel.spin();
+        System.out.println(String.format("Dropped into %s %d", myWheel.getColor(), myWheel.getNumber()));
+        if (b.isMade(betChoice, myWheel)) {
             System.out.println("*** Congratulations :) You win ***");
-            amount = b.payout(amount);
+            amount *= b.getOdds();
         }
         else {
             System.out.println("*** Sorry :( You lose ***");
@@ -66,13 +71,13 @@ public class Game {
 
     /**
      * Prompt the user to make a bet from a menu of choices.
+     * @throws IllegalAccessException 
+     * @throws InstantiationException 
+     * @throws ClassNotFoundException 
      */
-    private Bet promptForBet () {
-        System.out.println("You can make one of the following types of bets:");
-        for (int k = 0; k < myPossibleBets.length; k++) {
-            System.out.println(String.format("%d) %s", (k + 1), myPossibleBets[k]));
-        }
-        int response = ConsoleReader.promptRange("Please make a choice", 1, myPossibleBets.length);
-        return myPossibleBets[response - 1];
-    }
+    	public Bet getNewBet(String description) throws ClassNotFoundException, InstantiationException, IllegalAccessException
+    	{
+    		return factory.createReflection(description);
+    	}
+    
 }

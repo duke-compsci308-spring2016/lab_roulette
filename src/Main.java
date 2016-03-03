@@ -8,7 +8,7 @@ import roulette.Game;
  * @author Robert C. Duvall
  */
 public class Main {
-    public static void main (String[] args) {
+    public static void main (String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         Game game = new Game();
         Gambler player = new Gambler("Robert", 1000);
 
