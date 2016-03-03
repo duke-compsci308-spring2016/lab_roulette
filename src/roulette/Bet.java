@@ -21,20 +21,28 @@ public abstract class Bet {
     }
 
     /**
-     * @return odds given by the house for this kind of bet
+     * @return amount to pay out for winning this bet
      */
-    public int getOdds () {
-        return myOdds;
+    public int payout (int wager) {
+        return myOdds * wager;
     }
 
     /**
-     * @return name of this kind of bet
+     * @return string representation of this bet
      */
-    public String getDescription () {
+    public String toString () {
         return myDescription;
     }
-    
-    public abstract String placeBet();
-    
-    public abstract boolean betIsMade (String betChoice, Wheel wheel);
+
+    /**
+     * Place bet by prompting user for the specific information need to complete this bet.
+     */
+    public abstract void place ();
+
+    /**
+     * Checks if bet is won or lost given result of spinning the wheel.
+     *
+     * @param wheel information needed to check if bet won or lost
+     */
+    public abstract boolean isMade (Wheel.SpinResult spinResult);
 }

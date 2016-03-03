@@ -1,5 +1,6 @@
 package roulette;
 
+import roulette.Wheel.SpinResult;
 import util.ConsoleReader;
 
 public class Consecutive extends Bet {
@@ -18,6 +19,18 @@ public class Consecutive extends Bet {
 	public boolean betIsMade(String betChoice, Wheel wheel) {
 		int start = Integer.parseInt(betChoice);
 		return (start <= wheel.getNumber() && wheel.getNumber() < start + 3);
+	}
+
+	@Override
+	public void place() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isMade(SpinResult spinResult) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
