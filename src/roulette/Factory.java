@@ -14,9 +14,9 @@ public class Factory {
 //                            new OddEven("Odd or Even", 1),
 //                            new ThreeConsecutive("Three in a Row", 11));
         betTypes = new HashMap<>();
-        betTypes.put(0, new Parameters("RedBlack", "Red or Black", 1));
-        betTypes.put(1, new Parameters("OddEven", "Odd or Even", 1));
-        betTypes.put(2, new Parameters("ThreeConsecutive", "Three in a Row", 11));
+        betTypes.put(0, new Parameters("roulette.RedBlack", "Red or Black", 1));
+        betTypes.put(1, new Parameters("roulette.OddEven", "Odd or Even", 1));
+        betTypes.put(2, new Parameters("roulette.ThreeConsecutive", "Three in a Row", 11));
     }
     
     public Bet getBet (int index){
