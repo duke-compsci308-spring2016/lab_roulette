@@ -38,7 +38,7 @@ public abstract class Bet {
     /**
      * Place bet by prompting user for the specific information need to complete this bet.
      */
-    public abstract void place ();
+    public abstract String place ();
 
     /**
      * Checks if bet is won or lost given result of spinning the wheel.

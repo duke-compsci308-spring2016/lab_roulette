@@ -96,7 +96,7 @@ public class Wheel {
     }
 
     // @return number of the current spot on the wheel
-    private int getNumber () {
+    int getNumber () {
         return myValue;
     }
 
