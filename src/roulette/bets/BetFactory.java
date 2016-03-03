@@ -1,12 +1,9 @@
 package roulette.bets;
 
-import java.util.ArrayList;
-import java.util.List;
 import roulette.Bet;
 
 public class BetFactory {
 
-    List<String> betTypes;
     private Bet[] myPossibleBets = {
                                     new RedBlack("Red or Black", 1),
                                     new OddEven("Odd or Even", 1),
@@ -14,15 +11,11 @@ public class BetFactory {
     };
 
     public BetFactory () {
-        betTypes = new ArrayList<>();
-        betTypes.add("OddEven");
-        betTypes.add("RedBlack");
-        betTypes.add("ThreeConsecutive");
         
     }
     
-    public Bet makeBet(String betType) {
-        Bet bet = myPossibleBets[betTypes.indexOf(betType)];
+    public Bet makeBet(int betIndex) {
+        Bet bet = myPossibleBets[betIndex];
         return bet;
         
     }
