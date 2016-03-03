@@ -1,22 +1,28 @@
 package roulette.bets;
 
+import java.lang.reflect.Constructor;
 import roulette.Bet;
 
 public class BetFactory {
 
-    private Bet[] myPossibleBets = {
-                                    new RedBlack("Red or Black", 1),
-                                    new OddEven("Odd or Even", 1),
-                                    new ThreeConsecutive("Three in a Row", 11),
-    };
+    private String[] myPossibleBets = {"RedBlack", "OddEven", "ThreeConsecutive"};
 
     public BetFactory () {
         
     }
     
-    public Bet makeBet(int betIndex) {
-        Bet bet = myPossibleBets[betIndex];
-        return bet;
+    public Bet makeBet(int betIndex)  {
+        String betClass = myPossibleBets[betIndex];
+        try {
+            Class<?> c = Class.forName(betClass);
+            Constructor<?> constructor = null;
+            constructor = c.getConstructor(String.class, Integer.class); 
+            Bet bet = (Bet) constructor.newInstance(betClass, 1);
+            return bet;
+        } catch (ReflectiveOperationException e){
+           // Deal with error
+            return null;
+        }
         
     }
     
