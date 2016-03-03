@@ -3,12 +3,25 @@ import java.lang.reflect.Constructor;
 import java.util.*;
 
 public class Factory {
+	private static final String myPath = "roulette/roulette.properties";
+	private ResourceBundle myBundle;
     private Map<Integer, Parameters> myBetTypes;
     public Factory () {
+    	myBundle = ResourceBundle.getBundle(myPath);
         myBetTypes = new HashMap<>();
-        myBetTypes.put(0, new Parameters("RedBlack", "Red or Black", 1));
-        myBetTypes.put(1, new Parameters("OddEven", "Odd or Even", 1));
-        myBetTypes.put(2, new Parameters("ThreeConsecutive", "Three in a Row", 11));
+        int counter = 0;
+        for(String aKey: myBundle.keySet()) {
+        	String myClassName = "roulette." + aKey;
+        	String myDescription = myBundle.getString(aKey);
+        	String [] args = myDescription.split(",");
+        	myBetTypes.put(counter, new Parameters(myClassName, args[0], Integer.parseInt(args[1])));
+        	counter++;
+        }
+    }
+    public void print(){
+        for (int i = 0; i < myBetTypes.size(); i++) {
+            System.out.println(myBetTypes.get(i));
+        }
     }
     
     public Bet getBet (int index){
@@ -23,11 +36,7 @@ public class Factory {
     	return null;    
     	}
     
-    public void print(){
-        for (int i = 0; i < myBetTypes.size(); i++) {
-            System.out.println(myBetTypes.get(i));
-        }
-    }
+    
     
     public int getLenth(){
         return myBetTypes.size();
