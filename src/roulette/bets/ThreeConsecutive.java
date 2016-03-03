@@ -2,6 +2,7 @@ package roulette.bets;
 
 import roulette.Bet;
 import roulette.Wheel;
+import roulette.Wheel.SpinResult;
 import util.ConsoleReader;
 
 
