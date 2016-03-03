@@ -47,7 +47,8 @@ public class Game {
     public void play (Gambler player) {
         int amount = ConsoleReader.promptRange("How much do you want to bet",
                                                0, player.getBankroll());
-        Bet b = promptForBet();
+        BetFactory betFactory = new BetFactory();
+        Bet b = betFactory.createBet();
         b.place();
 
         System.out.print("Spinning ...");
@@ -67,12 +68,12 @@ public class Game {
     /**
      * Prompt the user to make a bet from a menu of choices.
      */
-    private Bet promptForBet () {
-        System.out.println("You can make one of the following types of bets:");
-        for (int k = 0; k < myPossibleBets.length; k++) {
-            System.out.println(String.format("%d) %s", (k + 1), myPossibleBets[k]));
-        }
-        int response = ConsoleReader.promptRange("Please make a choice", 1, myPossibleBets.length);
-        return myPossibleBets[response - 1];
-    }
+//    private Bet promptForBet () {
+//        System.out.println("You can make one of the following types of bets:");
+//        for (int k = 0; k < myPossibleBets.length; k++) {
+//            System.out.println(String.format("%d) %s", (k + 1), myPossibleBets[k]));
+//        }
+//        int response = ConsoleReader.promptRange("Please make a choice", 1, myPossibleBets.length);
+//        return myPossibleBets[response - 1];
+//    }
 }
