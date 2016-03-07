@@ -10,7 +10,7 @@ import roulette.Game;
 public class Main {
     public static void main (String[] args) {
         Game game = new Game();
-        Gambler player = new Gambler("Robert", 1000);
+        Gambler player = new Gambler("Adam", 1000);
 
         System.out.println(String.format("Hello %s, let's play %s!\n", player.getName(), game.getName()));
         while (player.isSolvent()) {
